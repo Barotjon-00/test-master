@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Test Master</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,577 +15,644 @@
         }
 
         :root {
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
+            --bg-main: #0d1b2a;
+            --bg-card: #1b2838;
+            --bg-input: #162231;
             --text-white: #ffffff;
-            --text-gray: #8b8b9e;
-            --accent-purple: #8b5cf6;
-            --gradient-main: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            --gradient-green: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-            --gradient-red: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            --text-gray: #8899a6;
+            --accent-blue: #1d9bf0;
+            --accent-cyan: #00d4aa;
+            --accent-orange: #f59e0b;
+            --accent-yellow: #fbbf24;
+            --border-color: #2d4a5e;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-dark);
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(180deg, #0d1b2a 0%, #1a2d42 100%);
             color: var(--text-white);
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .bg-gradient {
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            top: -25%;
-            left: -25%;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 40%);
-            animation: bgFloat 15s ease-in-out infinite;
-        }
-
-        @keyframes bgFloat {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, -20px); }
-        }
-
-        .floating-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            animation: orbFloat 8s ease-in-out infinite;
-        }
-
-        .orb-1 { width: 300px; height: 300px; background: rgba(139, 92, 246, 0.3); top: -100px; right: -100px; }
-        .orb-2 { width: 200px; height: 200px; background: rgba(236, 72, 153, 0.25); bottom: 20%; left: -50px; animation-delay: -3s; }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-30px) scale(1.1); }
+            padding-bottom: 80px;
         }
 
         .container {
-            max-width: 440px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
-            padding-bottom: 100px;
-            position: relative;
-            z-index: 1;
+            padding: 16px;
         }
 
+        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            margin-bottom: 20px;
+            padding: 12px 0;
+            margin-bottom: 16px;
         }
 
-        .progress-circle {
-            width: 52px;
-            height: 52px;
-            position: relative;
-        }
-
-        .progress-circle svg { transform: rotate(-90deg); }
-        .progress-circle circle { fill: none; stroke-width: 4; stroke-linecap: round; }
-        .progress-bg { stroke: rgba(255, 255, 255, 0.1); }
-        .progress-fill { stroke: url(#progressGradient); transition: stroke-dashoffset 0.6s ease; }
-
-        .progress-number {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .score-group { display: flex; gap: 16px; }
-
-        .score-badge {
+        .header-left {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 16px;
+            color: var(--text-gray);
+            font-size: 15px;
+            cursor: pointer;
         }
 
-        .score-badge.correct { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .score-badge.wrong { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-
-        .question-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 28px;
-            padding: 28px;
-            margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
-            animation: cardAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .header-left svg {
+            width: 20px;
+            height: 20px;
         }
 
-        .question-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--gradient-main);
+        .header-right {
+            font-size: 15px;
+            color: var(--text-gray);
         }
 
-        @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(40px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .question-badge {
-            display: inline-flex;
-            align-items: center;
+        /* Search Bar */
+        .search-bar {
+            display: flex;
             gap: 8px;
-            padding: 8px 16px;
-            background: var(--gradient-blue);
-            border-radius: 30px;
-            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            gap: 10px;
+        }
+
+        .search-input svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-gray);
+            flex-shrink: 0;
+        }
+
+        .search-input input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-white);
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        .search-input input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .hash-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-gray);
+            font-size: 18px;
             font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .go-btn {
+            padding: 12px 20px;
+            background: var(--accent-blue);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background: var(--bg-input);
+            border-radius: 2px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-cyan);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
             margin-bottom: 20px;
+        }
+
+        .question-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+            color: #000;
         }
 
         .question-text {
             font-size: 18px;
             font-weight: 600;
-            line-height: 1.6;
-            margin-bottom: 28px;
+            line-height: 1.5;
+            flex: 1;
         }
 
-        .answers-list { display: flex; flex-direction: column; gap: 12px; }
+        /* Answers */
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-        .answer-option {
+        .answer-item {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 18px 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 2px solid rgba(255, 255, 255, 0.06);
-            border-radius: 18px;
+            gap: 14px;
+            padding: 16px;
+            background: var(--bg-input);
+            border: 2px solid transparent;
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
-        .answer-option:active:not(.locked) { transform: scale(0.98); }
-        .answer-option:not(.locked):hover { border-color: rgba(139, 92, 246, 0.5); background: rgba(139, 92, 246, 0.08); }
-
-        .answer-option.selected {
-            border-color: var(--accent-purple);
-            background: rgba(139, 92, 246, 0.12);
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+        .answer-item:hover {
+            border-color: var(--border-color);
         }
 
-        .answer-option.selected .answer-letter { background: var(--gradient-blue); color: white; border-color: transparent; }
-
-        .answer-option.correct {
-            border-color: #10b981;
-            background: rgba(16, 185, 129, 0.12);
-            animation: correctPop 0.4s ease;
+        .answer-item.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 212, 170, 0.1);
         }
 
-        .answer-option.correct .answer-letter { background: var(--gradient-green); color: white; border-color: transparent; }
+        .answer-item.correct {
+            border-color: var(--accent-yellow);
+            background: rgba(251, 191, 36, 0.15);
+        }
 
-        @keyframes correctPop { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-
-        .answer-option.wrong {
+        .answer-item.wrong {
             border-color: #ef4444;
-            background: rgba(239, 68, 68, 0.12);
-            animation: wrongShake 0.4s ease;
+            background: rgba(239, 68, 68, 0.1);
         }
-
-        .answer-option.wrong .answer-letter { background: var(--gradient-red); color: white; border-color: transparent; }
-
-        @keyframes wrongShake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
-
-        .answer-option.locked { cursor: default; opacity: 0.6; }
-        .answer-option.correct.locked, .answer-option.wrong.locked { opacity: 1; }
 
         .answer-letter {
-            width: 44px; height: 44px;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            border-radius: 14px;
-            font-weight: 700; font-size: 17px;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-
-        .answer-content { flex: 1; font-size: 15px; font-weight: 500; line-height: 1.5; }
-
-        .answer-status { font-size: 20px; opacity: 0; transform: scale(0); transition: all 0.3s ease; }
-        .answer-option.correct .answer-status, .answer-option.wrong .answer-status { opacity: 1; transform: scale(1); }
-
-        .nav-fixed {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            padding: 16px 20px;
-            padding-bottom: calc(16px + env(safe-area-inset-bottom));
-            background: linear-gradient(to top, rgba(10, 10, 15, 0.98) 60%, transparent);
-            z-index: 100;
-        }
-
-        .nav-buttons {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
             display: flex;
-            gap: 10px;
-            max-width: 440px;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .answer-item.selected .answer-letter {
+            background: var(--accent-cyan);
+            color: #000;
+        }
+
+        .answer-item.correct .answer-letter {
+            background: var(--accent-yellow);
+            color: #000;
+        }
+
+        .answer-item.wrong .answer-letter {
+            background: #ef4444;
+            color: white;
+        }
+
+        .answer-text {
+            flex: 1;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            background: var(--accent-blue);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-show {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            background: var(--accent-orange);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* Correct Answer Box */
+        .correct-answer-box {
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-top: 16px;
+            display: none;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .correct-answer-box.show {
+            display: block;
+        }
+
+        .correct-answer-box .label {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-main);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        }
+
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
             margin: 0 auto;
         }
 
         .nav-btn {
-            height: 56px;
-            border: none;
-            border-radius: 16px;
-            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 20px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-gray);
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-white);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            flex: 1;
+            font-family: inherit;
         }
 
-        .nav-btn:active { transform: scale(0.95); }
-        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
 
         .nav-btn.primary {
-            flex: 2.5;
-            background: var(--gradient-blue);
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            font-family: inherit;
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
         }
 
-        .start-screen {
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .logo-container { margin-bottom: 32px; position: relative; }
-
-        .logo {
-            width: 100px; height: 100px;
-            background: var(--gradient-main);
-            border-radius: 30px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 48px;
-            box-shadow: 0 0 60px rgba(139, 92, 246, 0.3);
-            animation: logoFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-
-        .logo-ring {
-            position: absolute;
-            top: -15px; left: -15px; right: -15px; bottom: -15px;
-            border: 2px solid rgba(139, 92, 246, 0.3);
-            border-radius: 38px;
-            animation: ringPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes ringPulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.2; } }
-
-        .app-title {
-            font-size: 32px; font-weight: 800; margin-bottom: 8px;
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .app-subtitle { font-size: 15px; color: var(--text-gray); margin-bottom: 48px; }
-
-        .mode-list { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 14px; }
-
-        .mode-card {
-            display: flex; align-items: center; gap: 18px;
-            padding: 20px 24px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-
-        .mode-card:hover { border-color: rgba(139, 92, 246, 0.4); background: rgba(139, 92, 246, 0.08); transform: translateY(-4px); }
-        .mode-card:active { transform: scale(0.98); }
-        .mode-card.featured { background: var(--gradient-blue); border: none; }
-        .mode-card.featured:hover { box-shadow: 0 20px 50px rgba(59, 130, 246, 0.4); }
-
-        .mode-icon {
-            width: 52px; height: 52px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 26px;
-        }
-
-        .mode-info { flex: 1; }
-        .mode-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-        .mode-desc { font-size: 13px; color: var(--text-gray); }
-        .mode-card.featured .mode-desc { color: rgba(255, 255, 255, 0.75); }
-        .mode-arrow { font-size: 20px; opacity: 0.5; }
-
-        .practice-panel { width: 100%; max-width: 340px; margin-top: 20px; }
-        .practice-title { font-size: 14px; color: var(--text-gray); margin-bottom: 16px; }
-        .practice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
-
-        .practice-chip {
-            padding: 18px 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            font-size: 18px; font-weight: 700;
-            color: var(--text-white);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .practice-chip:hover { border-color: var(--accent-purple); background: rgba(139, 92, 246, 0.1); }
-        .practice-chip:active { transform: scale(0.95); }
-
-        .back-btn {
-            width: 100%; padding: 16px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
+        .nav-btn-center {
+            width: 44px;
+            height: 44px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
             color: var(--text-gray);
-            font-size: 15px; font-weight: 500;
             cursor: pointer;
-            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .results-screen {
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px 20px;
+        /* Question List Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 70vh;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-input);
+            border: none;
+            border-radius: 8px;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .modal-body {
+            padding: 16px;
+            overflow-y: auto;
+            max-height: calc(70vh - 80px);
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .q-item {
+            aspect-ratio: 1;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .q-item:hover {
+            border-color: var(--accent-blue);
+        }
+
+        .q-item.current {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .q-item.answered {
+            background: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            color: #000;
+        }
+
+        /* Number Input Modal */
+        .number-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .number-modal.show {
+            display: flex;
+        }
+
+        .number-input-box {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 300px;
             text-align: center;
         }
 
-        .result-emoji { font-size: 72px; margin-bottom: 24px; animation: emojiPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        @keyframes emojiPop { 0% { transform: scale(0) rotate(-20deg); } 100% { transform: scale(1) rotate(0deg); } }
-
-        .result-circle { width: 160px; height: 160px; position: relative; margin: 0 auto 32px; }
-        .result-circle svg { transform: rotate(-90deg); }
-        .result-circle circle { fill: none; stroke-width: 10; stroke-linecap: round; }
-        .result-bg { stroke: rgba(255, 255, 255, 0.08); }
-        .result-fill { stroke: url(#resultGradient); transition: stroke-dashoffset 1.2s ease; }
-
-        .result-percent {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 42px; font-weight: 800;
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .number-input-title {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: var(--text-gray);
         }
 
-        .result-title { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-        .result-subtitle { font-size: 16px; color: var(--text-gray); margin-bottom: 40px; }
-
-        .stats-row { display: flex; gap: 24px; margin-bottom: 48px; }
-
-        .stat-box {
-            padding: 24px 36px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
+        .number-input {
+            width: 100%;
+            padding: 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            font-family: inherit;
+            margin-bottom: 16px;
         }
 
-        .stat-value { font-size: 36px; font-weight: 800; margin-bottom: 4px; }
-        .stat-box.correct .stat-value { color: #34d399; }
-        .stat-box.wrong .stat-value { color: #f87171; }
-        .stat-label { font-size: 13px; color: var(--text-gray); }
+        .number-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
 
-        .result-actions { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 280px; }
+        .number-btns {
+            display: flex;
+            gap: 12px;
+        }
 
-        .result-btn {
-            padding: 18px 32px;
+        .number-btn {
+            flex: 1;
+            padding: 12px;
             border: none;
-            border-radius: 16px;
-            font-size: 16px; font-weight: 600;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-family: inherit;
         }
 
-        .result-btn:active { transform: scale(0.97); }
-        .result-btn.primary { background: var(--gradient-blue); color: white; }
-        .result-btn.secondary { background: rgba(255, 255, 255, 0.05); color: var(--text-white); border: 1px solid rgba(255, 255, 255, 0.1); }
-
-        .loading-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-
-        .loader-wrapper { position: relative; width: 80px; height: 80px; }
-
-        .loader-ring {
-            position: absolute;
-            width: 100%; height: 100%;
-            border: 3px solid transparent;
-            border-top-color: var(--accent-purple);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .number-btn.cancel {
+            background: var(--bg-input);
+            color: var(--text-gray);
         }
 
-        .loader-ring:nth-child(2) { width: 60px; height: 60px; top: 10px; left: 10px; border-top-color: #ec4899; animation-duration: 0.8s; animation-direction: reverse; }
-        .loader-ring:nth-child(3) { width: 40px; height: 40px; top: 20px; left: 20px; border-top-color: #06b6d4; animation-duration: 0.6s; }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .loading-text { margin-top: 28px; font-size: 15px; color: var(--text-gray); }
-
-        .hidden { display: none !important; }
-        .svg-defs { position: absolute; width: 0; height: 0; }
+        .number-btn.confirm {
+            background: var(--accent-blue);
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <div class="background">
-        <div class="bg-gradient"></div>
-        <div class="floating-orb orb-1"></div>
-        <div class="floating-orb orb-2"></div>
-    </div>
-
-    <svg class="svg-defs">
-        <defs>
-            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#3b82f6"/>
-                <stop offset="100%" style="stop-color:#8b5cf6"/>
-            </linearGradient>
-            <linearGradient id="resultGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#667eea"/>
-                <stop offset="100%" style="stop-color:#f093fb"/>
-            </linearGradient>
-        </defs>
-    </svg>
-
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loader-wrapper">
-            <div class="loader-ring"></div>
-            <div class="loader-ring"></div>
-            <div class="loader-ring"></div>
-        </div>
-        <p class="loading-text">Yuklanmoqda...</p>
-    </div>
-
-    <div id="startScreen" class="start-screen hidden">
-        <div class="logo-container">
-            <div class="logo">📝</div>
-            <div class="logo-ring"></div>
-        </div>
-        <h1 class="app-title">Test Master</h1>
-        <p class="app-subtitle">Bilimingizni sinab ko'ring!</p>
-
-        <div class="mode-list" id="modeList">
-            <div class="mode-card featured" onclick="startQuiz('test')">
-                <div class="mode-icon">🚀</div>
-                <div class="mode-info">
-                    <div class="mode-name">Testni boshlash</div>
-                    <div class="mode-desc">Barcha savollar</div>
-                </div>
-                <span class="mode-arrow">→</span>
-            </div>
-            <div class="mode-card" onclick="showPractice()">
-                <div class="mode-icon">🎯</div>
-                <div class="mode-info">
-                    <div class="mode-name">Mashq rejimi</div>
-                    <div class="mode-desc">Tanlangan sonida</div>
-                </div>
-                <span class="mode-arrow">→</span>
-            </div>
-            <div class="mode-card" onclick="startQuiz('learn')">
-                <div class="mode-icon">📖</div>
-                <div class="mode-info">
-                    <div class="mode-name">O'rganish</div>
-                    <div class="mode-desc">Javoblarni ko'rish</div>
-                </div>
-                <span class="mode-arrow">→</span>
-            </div>
-        </div>
-
-        <div class="practice-panel hidden" id="practicePanel">
-            <p class="practice-title">Savollar sonini tanlang:</p>
-            <div class="practice-grid" id="practiceGrid"></div>
-            <button class="back-btn" onclick="hidePractice()">← Orqaga</button>
-        </div>
-    </div>
-
-    <div id="quizScreen" class="container hidden">
+    <div class="container">
+        <!-- Header -->
         <div class="header">
-            <div class="progress-circle">
-                <svg viewBox="0 0 52 52" width="52" height="52">
-                    <circle class="progress-bg" cx="26" cy="26" r="22"/>
-                    <circle class="progress-fill" id="progressCircle" cx="26" cy="26" r="22" stroke-dasharray="138.2" stroke-dashoffset="138.2"/>
+            <div class="header-left" onclick="closeApp()">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
-                <span class="progress-number" id="progressNum">1/10</span>
+                Bosh sahifa
             </div>
-            <div class="score-group">
-                <div class="score-badge correct">✓ <span id="scoreCorrect">0</span></div>
-                <div class="score-badge wrong">✗ <span id="scoreWrong">0</span></div>
-            </div>
+            <div class="header-right" id="questionCounter">1 / 10</div>
         </div>
 
-        <div class="question-card" id="questionCard">
-            <div class="question-badge">📌 <span id="qBadge">Savol 1</span></div>
-            <p class="question-text" id="qText">Savol matni</p>
-            <div class="answers-list" id="answersList"></div>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-input">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" placeholder="Savol qidirish..." id="searchInput" onkeypress="handleSearch(event)">
+            </div>
+            <button class="hash-btn" onclick="showNumberModal()">#</button>
+            <button class="go-btn" onclick="goToQuestion()">O'tish</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 10%"></div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-number" id="qNumber">1</div>
+                <div class="question-text" id="qText">Savol matni</div>
+            </div>
+
+            <div class="answers" id="answersList"></div>
+
+            <div class="action-buttons">
+                <button class="btn-check" onclick="checkAnswer()">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    Tekshirish
+                </button>
+                <button class="btn-show" onclick="toggleAnswer()">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <span id="showBtnText">Javobni ko'rish</span>
+                </button>
+            </div>
+
+            <div class="correct-answer-box" id="correctBox">
+                <span class="label">To'g'ri javob:</span> <span id="correctLetter">A</span> - <span id="correctText"></span>
+            </div>
         </div>
     </div>
 
-    <div id="resultsScreen" class="results-screen hidden">
-        <div class="result-emoji" id="resultEmoji">🎉</div>
-        <div class="result-circle">
-            <svg viewBox="0 0 160 160" width="160" height="160">
-                <circle class="result-bg" cx="80" cy="80" r="70"/>
-                <circle class="result-fill" id="resultCircle" cx="80" cy="80" r="70" stroke-dasharray="439.8" stroke-dashoffset="439.8"/>
-            </svg>
-            <span class="result-percent" id="resultPct">0%</span>
-        </div>
-        <h2 class="result-title" id="resultTitle">Tabriklaymiz!</h2>
-        <p class="result-subtitle" id="resultSub">Ajoyib natija!</p>
-        <div class="stats-row">
-            <div class="stat-box correct"><div class="stat-value" id="statCorrect">0</div><div class="stat-label">To'g'ri</div></div>
-            <div class="stat-box wrong"><div class="stat-value" id="statWrong">0</div><div class="stat-label">Noto'g'ri</div></div>
-        </div>
-        <div class="result-actions">
-            <button class="result-btn primary" onclick="restart()">🔄 Qayta boshlash</button>
-            <button class="result-btn secondary" onclick="closeApp()">🏠 Chiqish</button>
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-row">
+            <button class="nav-btn" id="prevBtn" onclick="prevQuestion()">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Oldingi
+            </button>
+            <button class="nav-btn-center" onclick="showQuestionList()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                </svg>
+            </button>
+            <button class="nav-btn primary" onclick="nextQuestion()">
+                Keyingi
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
         </div>
     </div>
 
-    <div class="nav-fixed hidden" id="navBar">
-        <div class="nav-buttons">
-            <button class="nav-btn" id="btnPrev" onclick="goPrev()">⬅️</button>
-            <button class="nav-btn primary" id="btnMain" onclick="mainAction()">Keyingi →</button>
-            <button class="nav-btn" onclick="goRandom()">🎲</button>
-            <button class="nav-btn" onclick="closeApp()">✕</button>
+    <!-- Question List Modal -->
+    <div class="modal-overlay" id="questionModal" onclick="hideQuestionList()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">Savollar ro'yxati</div>
+                <button class="modal-close" onclick="hideQuestionList()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="question-grid" id="questionGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Number Input Modal -->
+    <div class="number-modal" id="numberModal" onclick="hideNumberModal()">
+        <div class="number-input-box" onclick="event.stopPropagation()">
+            <div class="number-input-title">Savol raqamini kiriting</div>
+            <input type="number" class="number-input" id="numberInput" min="1" placeholder="1" onkeypress="handleNumberEnter(event)">
+            <div class="number-btns">
+                <button class="number-btn cancel" onclick="hideNumberModal()">Bekor</button>
+                <button class="number-btn confirm" onclick="goToNumberInput()">O'tish</button>
+            </div>
         </div>
     </div>
 
@@ -594,175 +661,238 @@
         tg.expand();
         tg.ready();
 
-        let questions = [], current = 0, selected = null, answered = false;
-        let score = { correct: 0, wrong: 0 }, mode = 'test', maps = {};
+        let questions = [];
+        let currentIndex = 0;
+        let selectedAnswer = null;
+        let answerShown = false;
+        let answeredQuestions = new Set();
 
         function init() {
-            questions = getDemo();
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-                document.getElementById('startScreen').classList.remove('hidden');
-            }, 600);
+            questions = getQuestions();
+            buildQuestionGrid();
+            renderQuestion();
         }
 
-        function getDemo() {
+        function getQuestions() {
             return [
-                { question: "Python'da ro'yxat yaratish uchun qaysi qavslar ishlatiladi?", answers: ["[]", "{}", "()", "<>"], correct_index: 0 },
-                { question: "HTML da sarlavha uchun qaysi teg ishlatiladi?", answers: ["<head>", "<h1>", "<title>", "<header>"], correct_index: 1 },
-                { question: "JavaScript'da o'zgaruvchi e'lon qilish uchun qaysi kalit so'z ishlatiladi?", answers: ["var", "int", "string", "define"], correct_index: 0 },
-                { question: "CSS da rangni qizil qilish uchun qaysi qiymat ishlatiladi?", answers: ["blue", "green", "red", "yellow"], correct_index: 2 },
-                { question: "SQL da ma'lumotlarni tanlash uchun qaysi buyruq ishlatiladi?", answers: ["GET", "SELECT", "FETCH", "RETRIEVE"], correct_index: 1 },
-                { question: "Git da o'zgarishlarni saqlash uchun qaysi buyruq ishlatiladi?", answers: ["git save", "git commit", "git push", "git store"], correct_index: 1 },
-                { question: "React.js qaysi kompaniya tomonidan yaratilgan?", answers: ["Google", "Microsoft", "Meta", "Apple"], correct_index: 2 },
-                { question: "Python'da 'print' funksiyasi nima qiladi?", answers: ["Fayl yaratadi", "Ma'lumot chiqaradi", "O'zgaruvchi e'lon qiladi", "Dasturni to'xtatadi"], correct_index: 1 },
-                { question: "HTTP qisqartmasi nimani anglatadi?", answers: ["Hyper Text Transfer Protocol", "High Tech Transfer Protocol", "Hyper Transfer Text Protocol", "Home Tool Transfer Protocol"], correct_index: 0 },
-                { question: "Qaysi dasturlash tili eng ko'p veb-saytlarda ishlatiladi?", answers: ["Python", "Java", "JavaScript", "C++"], correct_index: 2 }
+                { question: "Spiralli modelda har bir iteratsiya nima sifatida tasvirlanadi?", answers: ["Spiralli modelda har bir iteratsiya ishlab chiqishning tahliliy tsikli sifatida tasvirlanadi", "Spiralli modelda har bir iteratsiya ishlab chiqishning oraliq tsikli sifatida tasvirlanadi", "Spiralli modelda har bir iteratsiya ishlab chiqishning tugatilgan tsikli sifatida tasvirlanadi", "Spiralli modelda har bir iteratsiya ishlab chiqishning sintez tsikli sifatida tasvirlanadi"], correct_index: 2 },
+                { question: "Dasturiy ta'minot arxitekturasi nima?", answers: ["Dastur kodi", "Tizim tuzilmasi va komponentlar orasidagi munosabatlar", "Foydalanuvchi interfeysi", "Ma'lumotlar bazasi"], correct_index: 1 },
+                { question: "Agile metodologiyasining asosiy tamoyili nima?", answers: ["Batafsil hujjatlashtirish", "Mijoz bilan hamkorlik va o'zgarishlarga moslashuvchanlik", "Qat'iy rejalashtirish", "Uzun rivojlanish tsikllari"], correct_index: 1 },
+                { question: "Unit testing nima?", answers: ["Butun tizimni sinash", "Alohida modullarni yoki funksiyalarni sinash", "Foydalanuvchi interfeysini sinash", "Ma'lumotlar bazasini sinash"], correct_index: 1 },
+                { question: "Git nima uchun ishlatiladi?", answers: ["Kod yozish uchun", "Versiyalarni boshqarish va kod tarixini saqlash", "Dasturni ishga tushirish", "Ma'lumotlarni saqlash"], correct_index: 1 },
+                { question: "REST API nima?", answers: ["Dasturlash tili", "HTTP protokoli asosida ishlaydigan veb xizmatlar arxitekturasi", "Ma'lumotlar bazasi", "Operatsion tizim"], correct_index: 1 },
+                { question: "SQL injection nima?", answers: ["Ma'lumotlar bazasi turi", "Zararli SQL kodini kiritish orqali xavfsizlik zaifligidan foydalanish", "Dasturlash usuli", "Test turi"], correct_index: 1 },
+                { question: "Scrum metodologiyasida Sprint nima?", answers: ["Doimiy jarayon", "1-4 haftalik vaqt chegaralangan iteratsiya", "Hujjat turi", "Test bosqichi"], correct_index: 1 },
+                { question: "Docker nima uchun ishlatiladi?", answers: ["Kod yozish uchun", "Ilovalarni konteynerlashtirish va portativ qilish", "Ma'lumotlar bazasi", "Tarmoq sozlash"], correct_index: 1 },
+                { question: "CI/CD nima?", answers: ["Dasturlash tili", "Uzluksiz integratsiya va uzluksiz yetkazib berish", "Ma'lumotlar bazasi", "Xavfsizlik tizimi"], correct_index: 1 }
             ];
         }
 
-        function shuffle(arr) {
-            const a = [...arr];
-            for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-            return a;
-        }
-
-        function shuffleAns(q) {
-            const ans = [...q.answers], correct = ans[q.correct_index], shuffled = shuffle(ans);
-            return { answers: shuffled, correct_index: shuffled.indexOf(correct) };
-        }
-
-        function showPractice() {
-            document.getElementById('modeList').classList.add('hidden');
-            document.getElementById('practicePanel').classList.remove('hidden');
-            const grid = document.getElementById('practiceGrid');
+        function buildQuestionGrid() {
+            const grid = document.getElementById('questionGrid');
             grid.innerHTML = '';
-            [5, 10].filter(n => n <= questions.length).forEach(n => {
-                const btn = document.createElement('button');
-                btn.className = 'practice-chip';
-                btn.textContent = n;
-                btn.onclick = () => startQuiz('test', n);
-                grid.appendChild(btn);
+            questions.forEach((_, i) => {
+                const item = document.createElement('div');
+                item.className = 'q-item';
+                if (i === currentIndex) item.classList.add('current');
+                if (answeredQuestions.has(i)) item.classList.add('answered');
+                item.textContent = i + 1;
+                item.onclick = () => goToIndex(i);
+                grid.appendChild(item);
             });
         }
 
-        function hidePractice() {
-            document.getElementById('modeList').classList.remove('hidden');
-            document.getElementById('practicePanel').classList.add('hidden');
-        }
-
-        function startQuiz(m, count) {
-            mode = m;
-            questions = shuffle(getDemo());
-            if (count) questions = questions.slice(0, count);
-            maps = {};
-            questions.forEach((q, i) => maps[i] = shuffleAns(q));
-            current = 0; selected = null; answered = false; score = { correct: 0, wrong: 0 };
-            document.getElementById('startScreen').classList.add('hidden');
-            document.getElementById('quizScreen').classList.remove('hidden');
-            document.getElementById('navBar').classList.remove('hidden');
-            render();
-        }
-
-        function render() {
-            const q = questions[current], map = maps[current], total = questions.length;
-            const pct = ((current + 1) / total) * 100, circ = 138.2;
-            document.getElementById('progressCircle').style.strokeDashoffset = circ - (pct / 100) * circ;
-            document.getElementById('progressNum').textContent = `${current + 1}/${total}`;
-            document.getElementById('scoreCorrect').textContent = score.correct;
-            document.getElementById('scoreWrong').textContent = score.wrong;
-            document.getElementById('qBadge').textContent = `Savol ${current + 1}`;
+        function renderQuestion() {
+            const q = questions[currentIndex];
+            
+            document.getElementById('questionCounter').textContent = `${currentIndex + 1} / ${questions.length}`;
+            document.getElementById('qNumber').textContent = currentIndex + 1;
             document.getElementById('qText').textContent = q.question;
-
+            
+            const progress = ((currentIndex + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            selectedAnswer = null;
+            answerShown = false;
+            document.getElementById('correctBox').classList.remove('show');
+            document.getElementById('showBtnText').textContent = "Javobni ko'rish";
+            
             const list = document.getElementById('answersList');
             list.innerHTML = '';
-            map.answers.forEach((ans, i) => {
+            
+            q.answers.forEach((ans, i) => {
                 const div = document.createElement('div');
-                div.className = 'answer-option';
-                if (answered) div.classList.add('locked');
-                if (i === selected && !answered) div.classList.add('selected');
-                if (answered && i === map.correct_index) div.classList.add('correct');
-                if (answered && i === selected && i !== map.correct_index) div.classList.add('wrong');
-                const letter = String.fromCharCode(65 + i);
-                let status = answered ? (i === map.correct_index ? '✓' : (i === selected ? '✗' : '')) : '';
-                div.innerHTML = `<span class="answer-letter">${letter}</span><span class="answer-content">${ans}</span><span class="answer-status">${status}</span>`;
-                div.onclick = () => selectAns(i);
+                div.className = 'answer-item';
+                div.innerHTML = `
+                    <div class="answer-letter">${String.fromCharCode(65 + i)}</div>
+                    <div class="answer-text">${ans}</div>
+                `;
+                div.onclick = () => selectAnswer(i);
                 list.appendChild(div);
             });
-
-            document.getElementById('btnPrev').disabled = current === 0;
-            updateMainBtn();
-            const card = document.getElementById('questionCard');
-            card.style.animation = 'none'; card.offsetHeight; card.style.animation = 'cardAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            buildQuestionGrid();
         }
 
-        function updateMainBtn() {
-            const btn = document.getElementById('btnMain');
-            if (!answered) btn.textContent = mode === 'learn' ? (selected !== null ? '⚡ Tekshirish' : '👁 Ko\'rish') : '🤔 Tanlang';
-            else btn.textContent = current < questions.length - 1 ? 'Keyingi →' : '🏁 Yakunlash';
+        function selectAnswer(index) {
+            if (answerShown) return;
+            
+            selectedAnswer = index;
+            const items = document.querySelectorAll('.answer-item');
+            items.forEach((item, i) => {
+                item.classList.remove('selected', 'correct', 'wrong');
+                if (i === index) item.classList.add('selected');
+            });
         }
 
-        function selectAns(i) {
-            if (answered) return;
-            selected = i;
-            if (mode === 'test') checkAns(); else render();
+        function checkAnswer() {
+            if (selectedAnswer === null) {
+                try { tg.showAlert('Javobni tanlang!'); } catch(e) { alert('Javobni tanlang!'); }
+                return;
+            }
+            
+            const q = questions[currentIndex];
+            const items = document.querySelectorAll('.answer-item');
+            
+            items.forEach((item, i) => {
+                item.classList.remove('selected');
+                if (i === q.correct_index) {
+                    item.classList.add('correct');
+                } else if (i === selectedAnswer) {
+                    item.classList.add('wrong');
+                }
+            });
+            
+            answerShown = true;
+            answeredQuestions.add(currentIndex);
+            showCorrectBox();
+            
+            try {
+                if (selectedAnswer === q.correct_index) {
+                    tg.HapticFeedback.notificationOccurred('success');
+                } else {
+                    tg.HapticFeedback.notificationOccurred('error');
+                }
+            } catch(e) {}
         }
 
-        function mainAction() {
-            if (!answered) { if (mode === 'learn') { if (selected !== null) checkAns(); else showAns(); } }
-            else { if (current < questions.length - 1) goNext(); else showResults(); }
+        function toggleAnswer() {
+            const q = questions[currentIndex];
+            
+            if (answerShown) {
+                answerShown = false;
+                document.getElementById('correctBox').classList.remove('show');
+                document.getElementById('showBtnText').textContent = "Javobni ko'rish";
+                
+                const items = document.querySelectorAll('.answer-item');
+                items.forEach((item, i) => {
+                    item.classList.remove('correct', 'wrong');
+                    if (i === selectedAnswer) item.classList.add('selected');
+                });
+            } else {
+                const items = document.querySelectorAll('.answer-item');
+                items.forEach((item, i) => {
+                    item.classList.remove('selected');
+                    if (i === q.correct_index) {
+                        item.classList.add('correct');
+                    }
+                });
+                
+                answerShown = true;
+                showCorrectBox();
+            }
         }
 
-        function checkAns() {
-            if (selected === null && mode !== 'learn') return;
-            answered = true;
-            const map = maps[current];
-            if (selected === map.correct_index) { score.correct++; try { tg.HapticFeedback.notificationOccurred('success'); } catch(e) {} }
-            else { score.wrong++; try { tg.HapticFeedback.notificationOccurred('error'); } catch(e) {} }
-            render();
+        function showCorrectBox() {
+            const q = questions[currentIndex];
+            const letter = String.fromCharCode(65 + q.correct_index);
+            document.getElementById('correctLetter').textContent = letter;
+            document.getElementById('correctText').textContent = q.answers[q.correct_index];
+            document.getElementById('correctBox').classList.add('show');
+            document.getElementById('showBtnText').textContent = "Yashirish";
         }
 
-        function showAns() {
-            answered = true;
-            const map = maps[current];
-            if (selected !== null && selected !== map.correct_index) score.wrong++;
-            render();
+        function nextQuestion() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            }
         }
 
-        function goNext() { if (current < questions.length - 1) { current++; selected = null; answered = false; render(); } }
-        function goPrev() { if (current > 0) { current--; selected = null; answered = false; render(); } }
-        function goRandom() {
-            if (questions.length <= 1) return;
-            let n; do { n = Math.floor(Math.random() * questions.length); } while (n === current);
-            current = n; selected = null; answered = false; render();
-            try { tg.HapticFeedback.impactOccurred('light'); } catch(e) {}
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
         }
 
-        function showResults() {
-            document.getElementById('quizScreen').classList.add('hidden');
-            document.getElementById('navBar').classList.add('hidden');
-            document.getElementById('resultsScreen').classList.remove('hidden');
-            const total = questions.length, pct = Math.round((score.correct / total) * 100);
-            document.getElementById('statCorrect').textContent = score.correct;
-            document.getElementById('statWrong').textContent = score.wrong;
-            document.getElementById('resultPct').textContent = pct + '%';
-            setTimeout(() => { document.getElementById('resultCircle').style.strokeDashoffset = 439.8 - (pct / 100) * 439.8; }, 200);
-            let emoji, title, sub;
-            if (pct >= 90) { emoji = '🏆'; title = 'Ajoyib!'; sub = 'Siz zo\'rsiz!'; }
-            else if (pct >= 70) { emoji = '🎉'; title = 'Yaxshi!'; sub = 'Zo\'r natija!'; }
-            else if (pct >= 50) { emoji = '👍'; title = 'Qoniqarli'; sub = 'Yaxshi harakat!'; }
-            else { emoji = '📚'; title = 'Takrorlang'; sub = 'Yana urinib ko\'ring!'; }
-            document.getElementById('resultEmoji').textContent = emoji;
-            document.getElementById('resultTitle').textContent = title;
-            document.getElementById('resultSub').textContent = sub;
+        function goToIndex(index) {
+            currentIndex = index;
+            renderQuestion();
+            hideQuestionList();
         }
 
-        function restart() {
-            document.getElementById('resultsScreen').classList.add('hidden');
-            document.getElementById('startScreen').classList.remove('hidden');
-            hidePractice();
+        function showQuestionList() {
+            document.getElementById('questionModal').classList.add('show');
         }
 
-        function closeApp() { tg.close(); }
+        function hideQuestionList() {
+            document.getElementById('questionModal').classList.remove('show');
+        }
+
+        function showNumberModal() {
+            document.getElementById('numberModal').classList.add('show');
+            document.getElementById('numberInput').value = '';
+            setTimeout(() => document.getElementById('numberInput').focus(), 100);
+        }
+
+        function hideNumberModal() {
+            document.getElementById('numberModal').classList.remove('show');
+        }
+
+        function goToNumberInput() {
+            const num = parseInt(document.getElementById('numberInput').value);
+            if (num >= 1 && num <= questions.length) {
+                currentIndex = num - 1;
+                renderQuestion();
+                hideNumberModal();
+            } else {
+                try { tg.showAlert(`1 dan ${questions.length} gacha raqam kiriting`); } 
+                catch(e) { alert(`1 dan ${questions.length} gacha raqam kiriting`); }
+            }
+        }
+
+        function handleNumberEnter(e) {
+            if (e.key === 'Enter') goToNumberInput();
+        }
+
+        function goToQuestion() {
+            const search = document.getElementById('searchInput').value.trim();
+            const num = parseInt(search);
+            if (num >= 1 && num <= questions.length) {
+                currentIndex = num - 1;
+                renderQuestion();
+                document.getElementById('searchInput').value = '';
+            } else if (search) {
+                const index = questions.findIndex(q => 
+                    q.question.toLowerCase().includes(search.toLowerCase())
+                );
+                if (index !== -1) {
+                    currentIndex = index;
+                    renderQuestion();
+                    document.getElementById('searchInput').value = '';
+                }
+            }
+        }
+
+        function handleSearch(e) {
+            if (e.key === 'Enter') goToQuestion();
+        }
+
+        function closeApp() {
+            try { tg.close(); } catch(e) {}
+        }
 
         init();
     </script>
