@@ -21,19 +21,20 @@
             min-height: 100vh;
         }
 
-        /* ===== MAIN MENU ===== */
-        .menu-screen {
-            padding: 40px 20px;
+        .container {
             max-width: 500px;
             margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 100px;
         }
 
+        /* ===== HEADER ===== */
         .logo {
             width: 80px;
             height: 80px;
             background: linear-gradient(135deg, #e91e8c 0%, #f06292 100%);
             border-radius: 20px;
-            margin: 0 auto 24px;
+            margin: 20px auto 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -55,11 +56,11 @@
             margin-bottom: 32px;
         }
 
-        /* Stats Grid */
+        /* ===== STATS ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 24px;
         }
 
@@ -67,7 +68,8 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
-            padding: 16px 12px;
+            padding: 14px 8px;
+            text-align: center;
         }
 
         .stat-icon {
@@ -77,27 +79,48 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
+            margin: 0 auto 8px;
             font-size: 14px;
         }
 
         .stat-icon.total { border: 2px solid #a855f7; color: #a855f7; }
         .stat-icon.correct { border: 2px solid #00d4aa; color: #00d4aa; }
         .stat-icon.wrong { border: 2px solid #f87171; color: #f87171; }
-        .stat-icon.percent { color: #fbbf24; }
+        .stat-icon.percent { color: #fbbf24; font-size: 18px; }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
+        .stat-value { font-size: 22px; font-weight: 700; }
+        .stat-label { font-size: 10px; color: #8b8b9e; margin-top: 4px; }
+
+        /* ===== FILE UPLOAD ===== */
+        .upload-area {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .stat-label {
-            font-size: 11px;
-            color: #8b8b9e;
+        .upload-area:hover {
+            border-color: #e91e8c;
+            background: rgba(233, 30, 140, 0.05);
         }
 
-        /* Mode Cards */
+        .upload-area.has-file {
+            border-color: #00d4aa;
+            background: rgba(0, 212, 170, 0.05);
+        }
+
+        .upload-icon { font-size: 48px; margin-bottom: 12px; }
+        .upload-text { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .upload-hint { font-size: 13px; color: #8b8b9e; }
+        .upload-filename { color: #00d4aa; font-weight: 600; margin-top: 8px; }
+
+        #fileInput { display: none; }
+
+        /* ===== MODE CARDS ===== */
         .mode-cards {
             display: flex;
             flex-direction: column;
@@ -107,15 +130,14 @@
         .mode-card {
             display: flex;
             align-items: center;
-            padding: 20px;
+            padding: 18px;
             border-radius: 16px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
         }
 
-        .mode-card:active {
-            transform: scale(0.98);
-        }
+        .mode-card:active { transform: scale(0.98); }
+        .mode-card.disabled { opacity: 0.5; pointer-events: none; }
 
         .mode-card.blue { background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%); }
         .mode-card.purple { background: linear-gradient(135deg, #9333ea 0%, #a855f7 100%); }
@@ -123,48 +145,33 @@
         .mode-card.red { background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); }
 
         .mode-icon {
-            width: 48px;
-            height: 48px;
+            width: 46px;
+            height: 46px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-right: 16px;
+            font-size: 22px;
+            margin-right: 14px;
         }
 
-        .mode-info {
-            flex: 1;
-        }
-
-        .mode-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .mode-desc {
-            font-size: 13px;
-            opacity: 0.8;
-        }
-
-        .mode-arrow {
-            font-size: 20px;
-            opacity: 0.7;
-        }
+        .mode-info { flex: 1; }
+        .mode-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .mode-desc { font-size: 12px; opacity: 0.85; }
+        .mode-arrow { font-size: 20px; opacity: 0.7; }
 
         .mode-chips {
             display: flex;
             gap: 8px;
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         .mode-chip {
-            padding: 8px 16px;
+            padding: 6px 14px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             border: none;
@@ -172,25 +179,15 @@
             font-family: inherit;
         }
 
-        .mode-chip:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
         .footer {
             text-align: center;
-            color: #666;
-            font-size: 12px;
-            margin-top: 32px;
+            color: #555;
+            font-size: 11px;
+            margin-top: 30px;
         }
 
-        /* ===== QUIZ SCREEN - LEARNING MODE ===== */
-        .quiz-screen {
-            display: none;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 16px;
-            padding-bottom: 100px;
-        }
+        /* ===== QUIZ SCREEN ===== */
+        .quiz-screen { display: none; }
 
         .quiz-header {
             display: flex;
@@ -204,19 +201,15 @@
             align-items: center;
             gap: 8px;
             color: #8b8b9e;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
             background: none;
             border: none;
             font-family: inherit;
         }
 
-        .quiz-counter {
-            color: #8b8b9e;
-            font-size: 15px;
-        }
+        .quiz-counter { color: #8b8b9e; font-size: 14px; }
 
-        /* Search Bar */
         .search-bar {
             display: flex;
             gap: 8px;
@@ -230,7 +223,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 12px 16px;
+            padding: 12px 14px;
         }
 
         .search-input input {
@@ -239,70 +232,60 @@
             border: none;
             outline: none;
             color: white;
-            font-size: 15px;
+            font-size: 14px;
             margin-left: 10px;
             font-family: inherit;
         }
 
-        .search-input input::placeholder {
-            color: #666;
-        }
+        .search-input input::placeholder { color: #666; }
 
-        .hash-btn, .go-btn {
-            padding: 12px 20px;
+        .search-btn {
+            padding: 12px 16px;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             font-family: inherit;
             border: none;
         }
 
-        .hash-btn {
+        .search-btn.hash {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #8b8b9e;
         }
 
-        .go-btn {
+        .search-btn.go {
             background: #2563eb;
             color: white;
         }
 
-        /* Progress Bar */
         .progress-bar {
             height: 4px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 2px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #00d4aa 0%, #00d4aa 100%);
-            border-radius: 2px;
+            background: linear-gradient(90deg, #e91e8c, #00d4aa);
             transition: width 0.3s;
         }
 
-        .progress-fill.gradient {
-            background: linear-gradient(90deg, #e91e8c 0%, #00d4aa 100%);
-        }
-
-        /* Question Card */
         .question-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 16px;
+            padding: 22px;
         }
 
         .question-header {
             display: flex;
             align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 14px;
+            margin-bottom: 18px;
         }
 
         .question-badge {
@@ -316,183 +299,75 @@
         }
 
         .question-text {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
             line-height: 1.5;
         }
 
-        /* Answers */
-        .answers {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .answers { display: flex; flex-direction: column; gap: 10px; }
 
         .answer-item {
             display: flex;
             align-items: center;
-            padding: 16px;
+            padding: 14px;
             background: rgba(255, 255, 255, 0.03);
             border: 2px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .answer-item:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .answer-item.selected {
-            border-color: #fbbf24;
-            background: rgba(251, 191, 36, 0.1);
-        }
-
-        .answer-item.correct {
-            border-color: #00d4aa;
-            background: rgba(0, 212, 170, 0.15);
-        }
-
-        .answer-item.wrong {
-            border-color: #f87171;
-            background: rgba(248, 113, 113, 0.15);
-        }
+        .answer-item:hover { border-color: rgba(255, 255, 255, 0.2); }
+        .answer-item.selected { border-color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+        .answer-item.correct { border-color: #00d4aa; background: rgba(0, 212, 170, 0.15); }
+        .answer-item.wrong { border-color: #f87171; background: rgba(248, 113, 113, 0.15); }
 
         .answer-letter {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            margin-right: 14px;
+            margin-right: 12px;
             flex-shrink: 0;
+            font-size: 14px;
         }
 
-        .answer-item.selected .answer-letter {
-            background: #fbbf24;
-            color: #000;
-        }
+        .answer-item.selected .answer-letter { background: #fbbf24; color: #000; }
+        .answer-item.correct .answer-letter { background: #00d4aa; color: #000; }
+        .answer-item.wrong .answer-letter { background: #f87171; color: #fff; }
 
-        .answer-item.correct .answer-letter {
-            background: #00d4aa;
-            color: #000;
-        }
+        .answer-text { font-size: 14px; line-height: 1.4; }
 
-        .answer-item.wrong .answer-letter {
-            background: #f87171;
-            color: #fff;
-        }
-
-        .answer-text {
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        /* Action Buttons */
         .action-buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 18px;
         }
 
-        .btn-check {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 24px;
-            background: #2563eb;
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .btn-show {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 24px;
-            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .btn-pink {
-            background: linear-gradient(135deg, #e91e8c 0%, #f06292 100%);
-            padding: 16px 48px;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 15, 35, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 16px;
-            padding-bottom: calc(12px + env(safe-area-inset-bottom));
-            display: none;
-        }
-
-        .nav-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #8b8b9e;
-            font-size: 14px;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.4;
-        }
-
-        .nav-btn.primary {
-            background: #2563eb;
-            border-color: #2563eb;
-            color: white;
-        }
-
-        .nav-btn-center {
-            width: 44px;
-            height: 44px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #8b8b9e;
-            cursor: pointer;
+        .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            gap: 8px;
+            padding: 14px 22px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            color: white;
         }
 
-        /* ===== TEST MODE HEADER ===== */
+        .btn.blue { background: #2563eb; }
+        .btn.orange { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .btn.pink { background: linear-gradient(135deg, #e91e8c, #f06292); }
+
+        /* Test Header */
         .test-header {
             display: flex;
             justify-content: space-between;
@@ -503,14 +378,14 @@
         .test-stats {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
         }
 
         .test-stat {
             display: flex;
             align-items: center;
             gap: 4px;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         .test-stat.correct { color: #00d4aa; }
@@ -524,11 +399,59 @@
             margin-bottom: 16px;
         }
 
-        /* Center check button */
         .center-btn {
             display: flex;
             justify-content: center;
-            margin-top: 24px;
+            margin-top: 20px;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 35, 0.98);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: none;
+        }
+
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #8b8b9e;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .nav-btn:disabled { opacity: 0.4; }
+        .nav-btn.primary { background: #2563eb; border-color: #2563eb; color: white; }
+
+        .nav-btn-center {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #8b8b9e;
+            cursor: pointer;
+            font-size: 18px;
         }
 
         /* Modal */
@@ -539,16 +462,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
 
-        .modal.show {
-            display: flex;
-        }
+        .modal.show { display: flex; }
 
         .modal-content {
             background: #1a1a2e;
@@ -560,17 +481,14 @@
         }
 
         .modal-header {
-            padding: 20px;
+            padding: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
+        .modal-title { font-size: 17px; font-weight: 600; }
 
         .modal-close {
             background: rgba(255, 255, 255, 0.1);
@@ -580,13 +498,13 @@
             border-radius: 8px;
             color: #8b8b9e;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .modal-body {
             padding: 16px;
             overflow-y: auto;
-            max-height: calc(70vh - 80px);
+            max-height: calc(70vh - 70px);
         }
 
         .question-grid {
@@ -605,31 +523,17 @@
             justify-content: center;
             font-weight: 600;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        .q-item.current {
-            background: #2563eb;
-            border-color: #2563eb;
-        }
-
-        .q-item.answered-correct {
-            background: #00d4aa;
-            border-color: #00d4aa;
-            color: #000;
-        }
-
-        .q-item.answered-wrong {
-            background: #f87171;
-            border-color: #f87171;
-        }
-
-        .hidden { display: none !important; }
+        .q-item.current { background: #2563eb; border-color: #2563eb; }
+        .q-item.answered-correct { background: #00d4aa; border-color: #00d4aa; color: #000; }
+        .q-item.answered-wrong { background: #f87171; border-color: #f87171; }
     </style>
 </head>
 <body>
     <!-- MAIN MENU -->
-    <div class="menu-screen" id="menuScreen">
+    <div class="container" id="menuScreen">
         <div class="logo">📖</div>
         <h1 class="app-title">Test Tayyorlov</h1>
         <p class="app-subtitle">AKT va Axborot Tizimlari fanidan testlar</p>
@@ -637,18 +541,18 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon total">◎</div>
-                <div class="stat-value" id="totalCount">200</div>
+                <div class="stat-value" id="totalCount">0</div>
                 <div class="stat-label">Jami testlar</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon correct">✓</div>
                 <div class="stat-value" id="correctCount">0</div>
-                <div class="stat-label">To'g'ri javoblar</div>
+                <div class="stat-label">To'g'ri</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon wrong">✕</div>
                 <div class="stat-value" id="wrongCount">0</div>
-                <div class="stat-label">Xato javoblar</div>
+                <div class="stat-label">Xato</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon percent">☆</div>
@@ -657,8 +561,17 @@
             </div>
         </div>
 
+        <!-- FILE UPLOAD -->
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📄</div>
+            <div class="upload-text">Test faylini yuklang</div>
+            <div class="upload-hint">.txt yoki .docx format</div>
+            <div class="upload-filename" id="fileName"></div>
+        </div>
+        <input type="file" id="fileInput" accept=".txt,.docx" onchange="handleFile(this)">
+
         <div class="mode-cards">
-            <div class="mode-card blue" onclick="startMode('learn')">
+            <div class="mode-card blue disabled" id="learnCard" onclick="startMode('learn')">
                 <div class="mode-icon">📖</div>
                 <div class="mode-info">
                     <div class="mode-title">O'rganish rejimi</div>
@@ -667,20 +580,20 @@
                 <div class="mode-arrow">›</div>
             </div>
 
-            <div class="mode-card purple" onclick="startMode('all')">
+            <div class="mode-card purple disabled" id="allCard" onclick="startMode('all')">
                 <div class="mode-icon">◎</div>
                 <div class="mode-info">
                     <div class="mode-title">Barcha testlar</div>
-                    <div class="mode-desc" id="allTestsDesc">200 ta savolga javob bering</div>
+                    <div class="mode-desc" id="allTestsDesc">Barcha savolga javob bering</div>
                 </div>
                 <div class="mode-arrow">›</div>
             </div>
 
-            <div class="mode-card green" onclick="startMode('random', 20)">
+            <div class="mode-card green disabled" id="randomCard" onclick="startMode('random', 20)">
                 <div class="mode-icon">⚡</div>
                 <div class="mode-info">
                     <div class="mode-title">Tasodifiy test</div>
-                    <div class="mode-desc">20 ta tasodifiy savol</div>
+                    <div class="mode-desc">Tasodifiy savollar</div>
                     <div class="mode-chips">
                         <button class="mode-chip" onclick="event.stopPropagation(); startMode('random', 10)">10 ta</button>
                         <button class="mode-chip" onclick="event.stopPropagation(); startMode('random', 30)">30 ta</button>
@@ -690,7 +603,7 @@
                 <div class="mode-arrow">›</div>
             </div>
 
-            <div class="mode-card red" id="wrongCard" style="display: none;" onclick="startMode('wrong')">
+            <div class="mode-card red" id="wrongCard" style="display:none" onclick="startMode('wrong')">
                 <div class="mode-icon">↺</div>
                 <div class="mode-info">
                     <div class="mode-title">Xatolarni takrorlash</div>
@@ -703,11 +616,11 @@
         <div class="footer">Magistratura - TJBAKT mutaxassisligi</div>
     </div>
 
-    <!-- QUIZ SCREEN - LEARNING MODE -->
-    <div class="quiz-screen" id="quizLearn">
+    <!-- LEARNING MODE -->
+    <div class="container quiz-screen" id="quizLearn">
         <div class="quiz-header">
             <button class="home-btn" onclick="goHome()">🏠 Bosh sahifa</button>
-            <div class="quiz-counter" id="learnCounter">1 / 200</div>
+            <div class="quiz-counter" id="learnCounter">1 / 100</div>
         </div>
 
         <div class="search-bar">
@@ -715,8 +628,8 @@
                 <span>🔍</span>
                 <input type="text" placeholder="Savol qidirish..." id="searchInput">
             </div>
-            <button class="hash-btn" onclick="showNumberInput()">#</button>
-            <button class="go-btn" onclick="goToSearch()">O'tish</button>
+            <button class="search-btn hash" onclick="showNumberModal()">#</button>
+            <button class="search-btn go" onclick="goToSearch()">O'tish</button>
         </div>
 
         <div class="progress-bar">
@@ -726,18 +639,18 @@
         <div class="question-card">
             <div class="question-header">
                 <div class="question-badge" id="learnBadge">1</div>
-                <div class="question-text" id="learnQuestion">Savol matni</div>
+                <div class="question-text" id="learnQuestion">Savol</div>
             </div>
             <div class="answers" id="learnAnswers"></div>
             <div class="action-buttons">
-                <button class="btn-check" onclick="checkAnswer()">✓ Tekshirish</button>
-                <button class="btn-show" onclick="showAnswer()">⚡ <span id="showBtnText">Javobni ko'rish</span></button>
+                <button class="btn blue" onclick="checkLearn()">✓ Tekshirish</button>
+                <button class="btn orange" onclick="showLearn()">⚡ <span id="showBtnText">Javobni ko'rish</span></button>
             </div>
         </div>
     </div>
 
-    <!-- QUIZ SCREEN - TEST MODE -->
-    <div class="quiz-screen" id="quizTest">
+    <!-- TEST MODE -->
+    <div class="container quiz-screen" id="quizTest">
         <div class="test-header">
             <button class="home-btn" onclick="goHome()">🏠</button>
             <div class="test-stats">
@@ -748,7 +661,7 @@
         </div>
 
         <div class="progress-bar">
-            <div class="progress-fill gradient" id="testProgress"></div>
+            <div class="progress-fill" id="testProgress"></div>
         </div>
 
         <div class="test-counter" id="testCounter">1 / 50</div>
@@ -756,11 +669,11 @@
         <div class="question-card">
             <div class="question-header">
                 <div class="question-badge" id="testBadge">#1</div>
-                <div class="question-text" id="testQuestion">Savol matni</div>
+                <div class="question-text" id="testQuestion">Savol</div>
             </div>
             <div class="answers" id="testAnswers"></div>
             <div class="center-btn">
-                <button class="btn-check btn-pink" onclick="checkTestAnswer()">Tekshirish</button>
+                <button class="btn pink" onclick="checkTest()">Tekshirish</button>
             </div>
         </div>
     </div>
@@ -769,17 +682,17 @@
     <div class="bottom-nav" id="bottomNav">
         <div class="nav-row">
             <button class="nav-btn" id="prevBtn" onclick="prevQuestion()">‹ Oldingi</button>
-            <button class="nav-btn-center" onclick="showQuestionList()">☰</button>
+            <button class="nav-btn-center" onclick="showQuestionModal()">☰</button>
             <button class="nav-btn primary" onclick="nextQuestion()">Keyingi ›</button>
         </div>
     </div>
 
-    <!-- QUESTION LIST MODAL -->
+    <!-- MODALS -->
     <div class="modal" id="questionModal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">Savollar ro'yxati</div>
-                <button class="modal-close" onclick="hideQuestionList()">✕</button>
+                <button class="modal-close" onclick="hideModal('questionModal')">✕</button>
             </div>
             <div class="modal-body">
                 <div class="question-grid" id="questionGrid"></div>
@@ -787,96 +700,199 @@
         </div>
     </div>
 
-    <!-- NUMBER INPUT MODAL -->
     <div class="modal" id="numberModal">
-        <div class="modal-content" style="max-width: 300px;">
+        <div class="modal-content" style="max-width:280px">
             <div class="modal-header">
                 <div class="modal-title">Savol raqami</div>
-                <button class="modal-close" onclick="hideNumberInput()">✕</button>
+                <button class="modal-close" onclick="hideModal('numberModal')">✕</button>
             </div>
-            <div class="modal-body" style="text-align: center;">
-                <input type="number" id="numberInput" style="width: 100%; padding: 16px; font-size: 24px; text-align: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; margin-bottom: 16px;" placeholder="1">
-                <button class="go-btn" style="width: 100%;" onclick="goToNumber()">O'tish</button>
+            <div class="modal-body" style="text-align:center">
+                <input type="number" id="numberInput" style="width:100%;padding:16px;font-size:24px;text-align:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:white;margin-bottom:16px" placeholder="1">
+                <button class="btn blue" style="width:100%" onclick="goToNumber()">O'tish</button>
             </div>
         </div>
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
+        const tg = window.Telegram?.WebApp;
+        if (tg) { tg.expand(); tg.ready(); }
 
-        // Data
+        // ===== DATA =====
         let questions = [];
-        let currentMode = '';
+        let testQuestions = [];
         let currentIndex = 0;
         let selectedAnswer = null;
         let answerShown = false;
         let stats = { correct: 0, wrong: 0 };
-        let wrongQuestions = [];
-        let testQuestions = [];
+        let wrongIds = [];
+        let questionResults = {};
         let timerInterval = null;
         let seconds = 0;
-        let questionResults = {};
+        let currentMode = '';
 
-        // Initialize
+        // ===== INIT =====
         function init() {
-            questions = getQuestions();
-            document.getElementById('totalCount').textContent = questions.length;
-            document.getElementById('allTestsDesc').textContent = `${questions.length} ta savolga javob bering`;
-            loadStats();
+            loadData();
             updateMenu();
         }
 
-        function getQuestions() {
-            return [
-                { id: 1, question: "Spiralli modelda har bir iteratsiya nima sifatida tasvirlanadi?", answers: ["Spiralli modelda har bir iteratsiya ishlab chiqishning tugatilgan tsikli sifatida tasvirlanadi", "Spiralli modelda har bir iteratsiya ishlab chiqishning oraliq tsikli sifatida tasvirlanadi", "Spiralli modelda har bir iteratsiya ishlab chiqishning tahliliy tsikli sifatida tasvirlanadi", "Spiralli modelda har bir iteratsiya ishlab chiqishning sintez tsikli sifatida tasvirlanadi"], correct: 0 },
-                { id: 2, question: "Hayotiy tsiklning spiral modeli kaskadli modeldan nima bilan farq qiladi?", answers: ["Spiral model loyihalashning uch bosqichini belgilaydi", "Kaskadli model loyihalashnin 4 bosqichini belgilaydi", "Spiral model axborot tizimini ishlab chiqishda iteratsion jarayonni nazarda tutadi", "Spiral model AS ishlab chiqishning algoritmik metodini belgilaydi"], correct: 2 },
-                { id: 3, question: "Masalani qo'yilishi g'oyasini shakllantirish qaysi fazaga tegishli?", answers: ["Ishlab chiqish fazasi", "Kontseptual faza", "Loyihaviy faza", "Kuzatish"], correct: 1 },
-                { id: 4, question: "Dasturiy ta'minot arxitekturasi nima?", answers: ["Dastur kodi", "Tizim tuzilmasi va komponentlar orasidagi munosabatlar", "Foydalanuvchi interfeysi", "Ma'lumotlar bazasi strukturasi"], correct: 1 },
-                { id: 5, question: "Agile metodologiyasining asosiy tamoyili nima?", answers: ["Batafsil hujjatlashtirish", "Mijoz bilan hamkorlik va o'zgarishlarga moslashuvchanlik", "Qat'iy rejalashtirish", "Uzun rivojlanish tsikllari"], correct: 1 },
-                { id: 6, question: "Unit testing nima?", answers: ["Butun tizimni sinash", "Alohida modullarni yoki funksiyalarni sinash", "Foydalanuvchi interfeysini sinash", "Ma'lumotlar bazasini sinash"], correct: 1 },
-                { id: 7, question: "Git nima uchun ishlatiladi?", answers: ["Kod yozish uchun", "Versiyalarni boshqarish va kod tarixini saqlash", "Dasturni ishga tushirish", "Ma'lumotlarni saqlash"], correct: 1 },
-                { id: 8, question: "REST API nima?", answers: ["Dasturlash tili", "HTTP protokoli asosida ishlaydigan veb xizmatlar arxitekturasi", "Ma'lumotlar bazasi", "Operatsion tizim"], correct: 1 },
-                { id: 9, question: "SQL injection nima?", answers: ["Ma'lumotlar bazasi turi", "Zararli SQL kodini kiritish orqali xavfsizlik zaifligidan foydalanish", "Dasturlash usuli", "Test turi"], correct: 1 },
-                { id: 10, question: "Scrum metodologiyasida Sprint nima?", answers: ["Doimiy jarayon", "1-4 haftalik vaqt chegaralangan iteratsiya", "Hujjat turi", "Test bosqichi"], correct: 1 },
-                { id: 11, question: "Docker nima uchun ishlatiladi?", answers: ["Kod yozish uchun", "Ilovalarni konteynerlashtirish va portativ qilish", "Ma'lumotlar bazasi", "Tarmoq sozlash"], correct: 1 },
-                { id: 12, question: "CI/CD nima?", answers: ["Dasturlash tili", "Uzluksiz integratsiya va uzluksiz yetkazib berish", "Ma'lumotlar bazasi", "Xavfsizlik tizimi"], correct: 1 }
-            ];
-        }
-
-        function loadStats() {
+        function loadData() {
             try {
-                const saved = localStorage.getItem('testStats');
+                const saved = localStorage.getItem('testMasterData');
                 if (saved) {
                     const data = JSON.parse(saved);
+                    questions = data.questions || [];
                     stats = data.stats || { correct: 0, wrong: 0 };
-                    wrongQuestions = data.wrong || [];
+                    wrongIds = data.wrongIds || [];
                 }
             } catch(e) {}
         }
 
-        function saveStats() {
+        function saveData() {
             try {
-                localStorage.setItem('testStats', JSON.stringify({ stats, wrong: wrongQuestions }));
+                localStorage.setItem('testMasterData', JSON.stringify({
+                    questions, stats, wrongIds
+                }));
             } catch(e) {}
         }
 
         function updateMenu() {
+            document.getElementById('totalCount').textContent = questions.length;
             document.getElementById('correctCount').textContent = stats.correct;
             document.getElementById('wrongCount').textContent = stats.wrong;
+            
             const total = stats.correct + stats.wrong;
             const acc = total > 0 ? Math.round((stats.correct / total) * 100) : 0;
             document.getElementById('accuracy').textContent = acc + '%';
-
-            if (wrongQuestions.length > 0) {
+            
+            document.getElementById('allTestsDesc').textContent = `${questions.length} ta savolga javob bering`;
+            
+            const hasQuestions = questions.length > 0;
+            document.getElementById('learnCard').classList.toggle('disabled', !hasQuestions);
+            document.getElementById('allCard').classList.toggle('disabled', !hasQuestions);
+            document.getElementById('randomCard').classList.toggle('disabled', !hasQuestions);
+            
+            if (hasQuestions) {
+                document.getElementById('uploadArea').classList.add('has-file');
+                document.getElementById('fileName').textContent = `✅ ${questions.length} ta savol yuklangan`;
+            }
+            
+            if (wrongIds.length > 0) {
                 document.getElementById('wrongCard').style.display = 'flex';
-                document.getElementById('wrongTestsDesc').textContent = `${wrongQuestions.length} ta xato savol`;
+                document.getElementById('wrongTestsDesc').textContent = `${wrongIds.length} ta xato savol`;
             } else {
                 document.getElementById('wrongCard').style.display = 'none';
             }
         }
 
+        // ===== FILE PARSING =====
+        function handleFile(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            
+            if (file.name.endsWith('.txt')) {
+                reader.onload = (e) => parseText(e.target.result, file.name);
+                reader.readAsText(file, 'UTF-8');
+            } else if (file.name.endsWith('.docx')) {
+                reader.onload = (e) => parseDocx(e.target.result, file.name);
+                reader.readAsArrayBuffer(file);
+            }
+        }
+
+        function parseText(text, filename) {
+            const parsed = parseQuestions(text);
+            if (parsed.length > 0) {
+                questions = parsed;
+                stats = { correct: 0, wrong: 0 };
+                wrongIds = [];
+                saveData();
+                updateMenu();
+                alert(`✅ ${parsed.length} ta savol yuklandi!`);
+            } else {
+                alert('❌ Savollar topilmadi. Format tekshiring.');
+            }
+        }
+
+        async function parseDocx(arrayBuffer, filename) {
+            try {
+                const zip = await JSZip.loadAsync(arrayBuffer);
+                const content = await zip.file("word/document.xml").async("string");
+                
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(content, "text/xml");
+                const paragraphs = xmlDoc.getElementsByTagName("w:t");
+                
+                let text = '';
+                for (let p of paragraphs) {
+                    text += p.textContent + '\n';
+                }
+                
+                parseText(text, filename);
+            } catch(e) {
+                alert('❌ DOCX faylni o\'qib bo\'lmadi');
+            }
+        }
+
+        function parseQuestions(text) {
+            const result = [];
+            let blocks;
+            
+            if (text.includes('++++')) {
+                blocks = text.split(/\+{4,}/);
+            } else if (/^\d+\./m.test(text)) {
+                blocks = text.split(/\n(?=\d+\.)/);
+            } else {
+                blocks = text.split(/\n\s*\n/);
+            }
+            
+            blocks = blocks.map(b => b.trim()).filter(b => b);
+            
+            blocks.forEach((block, idx) => {
+                const lines = block.split('\n').map(l => l.trim()).filter(l => l);
+                if (lines.length < 2) return;
+                
+                let questionText = lines[0].replace(/^\d+[\.\)]\s*/, '').trim();
+                if (!questionText || questionText.length < 3) return;
+                
+                const answers = [];
+                let correctIndex = -1;
+                
+                for (let i = 1; i < lines.length; i++) {
+                    let line = lines[i];
+                    let isCorrect = false;
+                    
+                    if (/^[#\*\+✓✔]/.test(line)) {
+                        isCorrect = true;
+                        line = line.slice(1).trim();
+                    } else if (/^\[x\]/i.test(line)) {
+                        isCorrect = true;
+                        line = line.replace(/^\[x\]\s*/i, '').trim();
+                    }
+                    
+                    line = line.replace(/^[A-Za-zА-Яа-яЎўҚқҒғҲҳ][\.\)]\s*/, '').trim();
+                    
+                    if (line && line.length > 1) {
+                        if (isCorrect) correctIndex = answers.length;
+                        answers.push(line);
+                    }
+                }
+                
+                if (answers.length >= 2) {
+                    result.push({
+                        id: idx + 1,
+                        question: questionText,
+                        answers: answers,
+                        correct: correctIndex >= 0 ? correctIndex : 0
+                    });
+                }
+            });
+            
+            return result;
+        }
+
+        // ===== MODES =====
         function shuffle(arr) {
             const a = [...arr];
             for (let i = a.length - 1; i > 0; i--) {
@@ -887,59 +903,72 @@
         }
 
         function startMode(mode, count) {
+            if (questions.length === 0) return;
+            
             currentMode = mode;
             currentIndex = 0;
             selectedAnswer = null;
             answerShown = false;
             questionResults = {};
-
+            
             if (mode === 'learn') {
                 testQuestions = [...questions];
-                document.getElementById('menuScreen').style.display = 'none';
-                document.getElementById('quizLearn').style.display = 'block';
+                showScreen('quizLearn');
                 document.getElementById('bottomNav').style.display = 'block';
-                renderLearnQuestion();
+                renderLearn();
             } else if (mode === 'all') {
                 testQuestions = shuffle([...questions]);
-                startTestMode();
+                startTest();
             } else if (mode === 'random') {
-                testQuestions = shuffle([...questions]).slice(0, count);
-                startTestMode();
+                testQuestions = shuffle([...questions]).slice(0, Math.min(count, questions.length));
+                startTest();
             } else if (mode === 'wrong') {
-                testQuestions = wrongQuestions.map(id => questions.find(q => q.id === id)).filter(Boolean);
-                if (testQuestions.length === 0) {
-                    alert('Xato savollar yo\'q');
-                    return;
-                }
-                startTestMode();
+                testQuestions = wrongIds.map(id => questions.find(q => q.id === id)).filter(Boolean);
+                if (testQuestions.length === 0) return;
+                startTest();
             }
         }
 
-        function startTestMode() {
+        function startTest() {
             seconds = 0;
             document.getElementById('testCorrect').textContent = '0';
             document.getElementById('testWrong').textContent = '0';
             document.getElementById('testTime').textContent = '00:00';
             
-            document.getElementById('menuScreen').style.display = 'none';
-            document.getElementById('quizTest').style.display = 'block';
+            showScreen('quizTest');
             document.getElementById('bottomNav').style.display = 'none';
-            
             startTimer();
-            renderTestQuestion();
+            renderTest();
         }
 
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(() => {
                 seconds++;
-                const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-                const s = (seconds % 60).toString().padStart(2, '0');
+                const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+                const s = String(seconds % 60).padStart(2, '0');
                 document.getElementById('testTime').textContent = `${m}:${s}`;
             }, 1000);
         }
 
-        function renderLearnQuestion() {
+        function showScreen(id) {
+            document.getElementById('menuScreen').style.display = 'none';
+            document.getElementById('quizLearn').style.display = 'none';
+            document.getElementById('quizTest').style.display = 'none';
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function goHome() {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('menuScreen').style.display = 'block';
+            document.getElementById('quizLearn').style.display = 'none';
+            document.getElementById('quizTest').style.display = 'none';
+            document.getElementById('bottomNav').style.display = 'none';
+            updateMenu();
+        }
+
+        // ===== LEARNING MODE =====
+        function renderLearn() {
             const q = testQuestions[currentIndex];
             const total = testQuestions.length;
             
@@ -958,15 +987,15 @@
                 const div = document.createElement('div');
                 div.className = 'answer-item';
                 div.innerHTML = `<div class="answer-letter">${String.fromCharCode(65 + i)}</div><div class="answer-text">${ans}</div>`;
-                div.onclick = () => selectLearnAnswer(i);
+                div.onclick = () => selectLearn(i);
                 list.appendChild(div);
             });
             
             document.getElementById('prevBtn').disabled = currentIndex === 0;
-            buildQuestionGrid();
+            buildGrid();
         }
 
-        function selectLearnAnswer(i) {
+        function selectLearn(i) {
             if (answerShown) return;
             selectedAnswer = i;
             document.querySelectorAll('#learnAnswers .answer-item').forEach((item, idx) => {
@@ -974,40 +1003,52 @@
             });
         }
 
-        function checkAnswer() {
+        function checkLearn() {
             if (selectedAnswer === null) {
                 alert('Javobni tanlang!');
                 return;
             }
-            showAnswerResult();
+            showLearnResult();
         }
 
-        function showAnswer() {
+        function showLearn() {
             if (answerShown) {
                 answerShown = false;
                 document.getElementById('showBtnText').textContent = "Javobni ko'rish";
-                renderLearnQuestion();
+                renderLearn();
                 return;
             }
-            showAnswerResult();
+            showLearnResult();
         }
 
-        function showAnswerResult() {
+        function showLearnResult() {
             answerShown = true;
             document.getElementById('showBtnText').textContent = "Yashirish";
             
             const q = testQuestions[currentIndex];
             document.querySelectorAll('#learnAnswers .answer-item').forEach((item, i) => {
                 item.classList.remove('selected');
-                if (i === q.correct) {
-                    item.classList.add('correct');
-                } else if (i === selectedAnswer && i !== q.correct) {
-                    item.classList.add('wrong');
-                }
+                if (i === q.correct) item.classList.add('correct');
+                else if (i === selectedAnswer) item.classList.add('wrong');
             });
         }
 
-        function renderTestQuestion() {
+        function nextQuestion() {
+            if (currentIndex < testQuestions.length - 1) {
+                currentIndex++;
+                renderLearn();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderLearn();
+            }
+        }
+
+        // ===== TEST MODE =====
+        function renderTest() {
             const q = testQuestions[currentIndex];
             const total = testQuestions.length;
             
@@ -1024,19 +1065,19 @@
                 const div = document.createElement('div');
                 div.className = 'answer-item';
                 div.innerHTML = `<div class="answer-letter">${String.fromCharCode(65 + i)}</div><div class="answer-text">${ans}</div>`;
-                div.onclick = () => selectTestAnswer(i);
+                div.onclick = () => selectTest(i);
                 list.appendChild(div);
             });
         }
 
-        function selectTestAnswer(i) {
+        function selectTest(i) {
             selectedAnswer = i;
             document.querySelectorAll('#testAnswers .answer-item').forEach((item, idx) => {
                 item.classList.toggle('selected', idx === i);
             });
         }
 
-        function checkTestAnswer() {
+        function checkTest() {
             if (selectedAnswer === null) {
                 alert('Javobni tanlang!');
                 return;
@@ -1047,37 +1088,35 @@
             
             document.querySelectorAll('#testAnswers .answer-item').forEach((item, i) => {
                 item.classList.remove('selected');
-                if (i === q.correct) {
-                    item.classList.add('correct');
-                } else if (i === selectedAnswer) {
-                    item.classList.add('wrong');
-                }
+                if (i === q.correct) item.classList.add('correct');
+                else if (i === selectedAnswer) item.classList.add('wrong');
             });
             
             questionResults[currentIndex] = isCorrect;
             
             if (isCorrect) {
                 stats.correct++;
-                document.getElementById('testCorrect').textContent = Object.values(questionResults).filter(v => v).length;
-                wrongQuestions = wrongQuestions.filter(id => id !== q.id);
-                try { tg.HapticFeedback.notificationOccurred('success'); } catch(e) {}
+                wrongIds = wrongIds.filter(id => id !== q.id);
+                try { tg?.HapticFeedback?.notificationOccurred('success'); } catch(e) {}
             } else {
                 stats.wrong++;
-                document.getElementById('testWrong').textContent = Object.values(questionResults).filter(v => !v).length;
-                if (!wrongQuestions.includes(q.id)) wrongQuestions.push(q.id);
-                try { tg.HapticFeedback.notificationOccurred('error'); } catch(e) {}
+                if (!wrongIds.includes(q.id)) wrongIds.push(q.id);
+                try { tg?.HapticFeedback?.notificationOccurred('error'); } catch(e) {}
             }
             
-            saveStats();
+            document.getElementById('testCorrect').textContent = Object.values(questionResults).filter(v => v).length;
+            document.getElementById('testWrong').textContent = Object.values(questionResults).filter(v => !v).length;
+            
+            saveData();
             
             setTimeout(() => {
                 if (currentIndex < testQuestions.length - 1) {
                     currentIndex++;
-                    renderTestQuestion();
+                    renderTest();
                 } else {
                     finishTest();
                 }
-            }, 1000);
+            }, 800);
         }
 
         function finishTest() {
@@ -1087,34 +1126,12 @@
             const wrong = Object.values(questionResults).filter(v => !v).length;
             const pct = Math.round((correct / testQuestions.length) * 100);
             
-            alert(`Test yakunlandi!\n\nTo'g'ri: ${correct}\nNoto'g'ri: ${wrong}\nAniqlik: ${pct}%`);
+            alert(`🎉 Test yakunlandi!\n\n✅ To'g'ri: ${correct}\n❌ Noto'g'ri: ${wrong}\n📊 Aniqlik: ${pct}%`);
             goHome();
         }
 
-        function nextQuestion() {
-            if (currentIndex < testQuestions.length - 1) {
-                currentIndex++;
-                renderLearnQuestion();
-            }
-        }
-
-        function prevQuestion() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                renderLearnQuestion();
-            }
-        }
-
-        function goHome() {
-            if (timerInterval) clearInterval(timerInterval);
-            document.getElementById('menuScreen').style.display = 'block';
-            document.getElementById('quizLearn').style.display = 'none';
-            document.getElementById('quizTest').style.display = 'none';
-            document.getElementById('bottomNav').style.display = 'none';
-            updateMenu();
-        }
-
-        function buildQuestionGrid() {
+        // ===== MODALS & NAV =====
+        function buildGrid() {
             const grid = document.getElementById('questionGrid');
             grid.innerHTML = '';
             testQuestions.forEach((q, i) => {
@@ -1122,39 +1139,25 @@
                 div.className = 'q-item';
                 if (i === currentIndex) div.classList.add('current');
                 div.textContent = i + 1;
-                div.onclick = () => {
-                    currentIndex = i;
-                    renderLearnQuestion();
-                    hideQuestionList();
-                };
+                div.onclick = () => { currentIndex = i; renderLearn(); hideModal('questionModal'); };
                 grid.appendChild(div);
             });
         }
 
-        function showQuestionList() {
-            document.getElementById('questionModal').classList.add('show');
-        }
-
-        function hideQuestionList() {
-            document.getElementById('questionModal').classList.remove('show');
-        }
-
-        function showNumberInput() {
+        function showQuestionModal() { document.getElementById('questionModal').classList.add('show'); }
+        function showNumberModal() { 
             document.getElementById('numberModal').classList.add('show');
             document.getElementById('numberInput').value = '';
             document.getElementById('numberInput').focus();
         }
-
-        function hideNumberInput() {
-            document.getElementById('numberModal').classList.remove('show');
-        }
+        function hideModal(id) { document.getElementById(id).classList.remove('show'); }
 
         function goToNumber() {
             const num = parseInt(document.getElementById('numberInput').value);
             if (num >= 1 && num <= testQuestions.length) {
                 currentIndex = num - 1;
-                renderLearnQuestion();
-                hideNumberInput();
+                renderLearn();
+                hideModal('numberModal');
             } else {
                 alert(`1 dan ${testQuestions.length} gacha raqam kiriting`);
             }
@@ -1165,35 +1168,25 @@
             const num = parseInt(val);
             if (num >= 1 && num <= testQuestions.length) {
                 currentIndex = num - 1;
-                renderLearnQuestion();
+                renderLearn();
                 document.getElementById('searchInput').value = '';
             } else if (val) {
                 const idx = testQuestions.findIndex(q => q.question.toLowerCase().includes(val.toLowerCase()));
                 if (idx !== -1) {
                     currentIndex = idx;
-                    renderLearnQuestion();
+                    renderLearn();
                     document.getElementById('searchInput').value = '';
                 }
             }
         }
 
-        document.getElementById('numberInput').addEventListener('keypress', e => {
-            if (e.key === 'Enter') goToNumber();
-        });
-
-        document.getElementById('searchInput').addEventListener('keypress', e => {
-            if (e.key === 'Enter') goToSearch();
-        });
-
-        document.getElementById('questionModal').addEventListener('click', e => {
-            if (e.target.id === 'questionModal') hideQuestionList();
-        });
-
-        document.getElementById('numberModal').addEventListener('click', e => {
-            if (e.target.id === 'numberModal') hideNumberInput();
-        });
+        document.getElementById('numberInput').addEventListener('keypress', e => { if (e.key === 'Enter') goToNumber(); });
+        document.getElementById('searchInput').addEventListener('keypress', e => { if (e.key === 'Enter') goToSearch(); });
+        document.getElementById('questionModal').addEventListener('click', e => { if (e.target.id === 'questionModal') hideModal('questionModal'); });
+        document.getElementById('numberModal').addEventListener('click', e => { if (e.target.id === 'numberModal') hideModal('numberModal'); });
 
         init();
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </body>
 </html>
