@@ -838,7 +838,7 @@
         function parseQuestions(text) {
             const result = [];
             
-            // Normalize line breaks - handle different formats
+            // Normalize all line breaks
             text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
             
             // Split by ++++ to get individual questions
@@ -857,14 +857,36 @@
                 questionText = questionText.replace(/^\d+[\.\)]\s*/, ''); // Remove numbering
                 if (!questionText || questionText.length < 3) return;
                 
-                // Answers section - handle multiple line break formats
-                const answerBlock = parts[1].trim();
+                // Answers section
+                let answerBlock = parts[1].trim();
                 
-                // Split by newlines and filter empty lines
-                const answerLines = answerBlock
-                    .split('\n')
-                    .map(l => l.trim())
-                    .filter(l => l && l.length > 0);
+                // DEBUG: Log the answer block
+                console.log('=== DEBUG ===');
+                console.log('Question:', questionText);
+                console.log('Answer block:', answerBlock);
+                console.log('Answer block length:', answerBlock.length);
+                console.log('Has newlines:', answerBlock.includes('\n'));
+                
+                // Try to detect if answers are on separate lines or in one line
+                let answerLines = [];
+                
+                if (answerBlock.includes('\n')) {
+                    // Multi-line format
+                    answerLines = answerBlock.split('\n').map(l => l.trim()).filter(l => l);
+                } else {
+                    // Single line - might need special handling
+                    // Check if there are multiple words that could be separate answers
+                    const words = answerBlock.split(/\s+/);
+                    if (words.length > 4) {
+                        // Probably multiple answers on one line
+                        // Try to split by common patterns
+                        answerLines = answerBlock.split(/(?=[A-ZА-ЯЎҚҒҲa-zа-яўқғҳ]{2,})/).filter(l => l.trim());
+                    } else {
+                        answerLines = [answerBlock];
+                    }
+                }
+                
+                console.log('Answer lines:', answerLines);
                 
                 const answers = [];
                 let correctIndex = -1;
@@ -888,6 +910,10 @@
                         answers.push(line);
                     }
                 });
+                
+                console.log('Final answers:', answers);
+                console.log('Correct index:', correctIndex);
+                console.log('==============\n');
                 
                 // Only add question if it has at least 2 answers
                 if (answers.length >= 2) {
