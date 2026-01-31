@@ -785,7 +785,7 @@
             }
         }
 
-        // ===== FILE PARSING =====
+        // ===== FILE PARSING - FIXED =====
         function handleFile(input) {
             const file = input.files[0];
             if (!file) return;
@@ -811,7 +811,7 @@
                 updateMenu();
                 alert(`✅ ${parsed.length} ta savol yuklandi!`);
             } else {
-                alert('❌ Savollar topilmadi. Format tekshiring.');
+                alert('❌ Savollar topilmadi. Format:\n\nSavol\n====\n#To\'g\'ri javob\nNoto\'g\'ri 1\nNoto\'g\'ri 2\n++++');
             }
         }
 
@@ -837,48 +837,59 @@
 
         function parseQuestions(text) {
             const result = [];
-            let blocks;
             
-            if (text.includes('++++')) {
-                blocks = text.split(/\+{4,}/);
-            } else if (/^\d+\./m.test(text)) {
-                blocks = text.split(/\n(?=\d+\.)/);
-            } else {
-                blocks = text.split(/\n\s*\n/);
-            }
+            // Normalize line breaks - handle different formats
+            text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
             
-            blocks = blocks.map(b => b.trim()).filter(b => b);
+            // Split by ++++ to get individual questions
+            const blocks = text.split(/\+{4,}/);
             
             blocks.forEach((block, idx) => {
-                const lines = block.split('\n').map(l => l.trim()).filter(l => l);
-                if (lines.length < 2) return;
+                block = block.trim();
+                if (!block) return;
                 
-                let questionText = lines[0].replace(/^\d+[\.\)]\s*/, '').trim();
+                // Split by ==== to separate question from answers
+                const parts = block.split(/={4,}/);
+                if (parts.length < 2) return;
+                
+                // Question text
+                let questionText = parts[0].trim();
+                questionText = questionText.replace(/^\d+[\.\)]\s*/, ''); // Remove numbering
                 if (!questionText || questionText.length < 3) return;
+                
+                // Answers section - handle multiple line break formats
+                const answerBlock = parts[1].trim();
+                
+                // Split by newlines and filter empty lines
+                const answerLines = answerBlock
+                    .split('\n')
+                    .map(l => l.trim())
+                    .filter(l => l && l.length > 0);
                 
                 const answers = [];
                 let correctIndex = -1;
                 
-                for (let i = 1; i < lines.length; i++) {
-                    let line = lines[i];
+                answerLines.forEach(line => {
                     let isCorrect = false;
                     
-                    if (/^[#\*\+✓✔]/.test(line)) {
+                    // Check if line starts with # (correct answer marker)
+                    if (line.startsWith('#')) {
                         isCorrect = true;
-                        line = line.slice(1).trim();
-                    } else if (/^\[x\]/i.test(line)) {
-                        isCorrect = true;
-                        line = line.replace(/^\[x\]\s*/i, '').trim();
+                        line = line.substring(1).trim();
                     }
                     
+                    // Remove answer letters (A) B) etc if present
                     line = line.replace(/^[A-Za-zА-Яа-яЎўҚқҒғҲҳ][\.\)]\s*/, '').trim();
                     
-                    if (line && line.length > 1) {
-                        if (isCorrect) correctIndex = answers.length;
+                    if (line && line.length > 0) {
+                        if (isCorrect) {
+                            correctIndex = answers.length;
+                        }
                         answers.push(line);
                     }
-                }
+                });
                 
+                // Only add question if it has at least 2 answers
                 if (answers.length >= 2) {
                     result.push({
                         id: idx + 1,
