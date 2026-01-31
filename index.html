@@ -848,72 +848,40 @@
                 block = block.trim();
                 if (!block) return;
                 
-                // Split by ==== to separate question from answers
-                const parts = block.split(/={4,}/);
-                if (parts.length < 2) return;
+                // Split by ==== to get question and all answer parts
+                const parts = block.split(/={4,}/).map(p => p.trim()).filter(p => p);
                 
-                // Question text
-                let questionText = parts[0].trim();
+                if (parts.length < 3) return; // Need at least: question + 2 answers
+                
+                // First part is the question
+                let questionText = parts[0];
                 questionText = questionText.replace(/^\d+[\.\)]\s*/, ''); // Remove numbering
                 if (!questionText || questionText.length < 3) return;
                 
-                // Answers section
-                let answerBlock = parts[1].trim();
-                
-                // DEBUG: Log the answer block
-                console.log('=== DEBUG ===');
-                console.log('Question:', questionText);
-                console.log('Answer block:', answerBlock);
-                console.log('Answer block length:', answerBlock.length);
-                console.log('Has newlines:', answerBlock.includes('\n'));
-                
-                // Try to detect if answers are on separate lines or in one line
-                let answerLines = [];
-                
-                if (answerBlock.includes('\n')) {
-                    // Multi-line format
-                    answerLines = answerBlock.split('\n').map(l => l.trim()).filter(l => l);
-                } else {
-                    // Single line - might need special handling
-                    // Check if there are multiple words that could be separate answers
-                    const words = answerBlock.split(/\s+/);
-                    if (words.length > 4) {
-                        // Probably multiple answers on one line
-                        // Try to split by common patterns
-                        answerLines = answerBlock.split(/(?=[A-ZА-ЯЎҚҒҲa-zа-яўқғҳ]{2,})/).filter(l => l.trim());
-                    } else {
-                        answerLines = [answerBlock];
-                    }
-                }
-                
-                console.log('Answer lines:', answerLines);
-                
+                // All remaining parts are answers
                 const answers = [];
                 let correctIndex = -1;
                 
-                answerLines.forEach(line => {
+                for (let i = 1; i < parts.length; i++) {
+                    let answer = parts[i];
                     let isCorrect = false;
                     
-                    // Check if line starts with # (correct answer marker)
-                    if (line.startsWith('#')) {
+                    // Check if answer starts with # (correct answer marker)
+                    if (answer.startsWith('#')) {
                         isCorrect = true;
-                        line = line.substring(1).trim();
+                        answer = answer.substring(1).trim();
                     }
                     
                     // Remove answer letters (A) B) etc if present
-                    line = line.replace(/^[A-Za-zА-Яа-яЎўҚқҒғҲҳ][\.\)]\s*/, '').trim();
+                    answer = answer.replace(/^[A-Za-zА-Яа-яЎўҚқҒғҲҳ][\.\)]\s*/, '').trim();
                     
-                    if (line && line.length > 0) {
+                    if (answer && answer.length > 0) {
                         if (isCorrect) {
                             correctIndex = answers.length;
                         }
-                        answers.push(line);
+                        answers.push(answer);
                     }
-                });
-                
-                console.log('Final answers:', answers);
-                console.log('Correct index:', correctIndex);
-                console.log('==============\n');
+                }
                 
                 // Only add question if it has at least 2 answers
                 if (answers.length >= 2) {
